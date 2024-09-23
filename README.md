@@ -208,7 +208,10 @@ The motivation for building a great nutrient tracker started with this older Obj
 * Sync with HealthKit, for newer macOS versions
 * Implement Core Data
 * Re-write using Swift/SwiftUI?
+<br></br>
 
+# FeedBack
+<p class="contact-message">If you have any feedback or suggestions you can reach out using this <a class="btn" href="mailto:fbotlogic@fbotlogicsolutions.com?subject=Blue Marble Weather Support">Email</a> link.</p>
 
 
 
