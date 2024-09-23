@@ -11,7 +11,7 @@ The App also can save/open food diary and favorites files, and export data in cs
 # Technologies Used
 ## Languages and Frameworks							
 * Objective-C Programming language
-* Assembly Language
+* InterOp with Swift and Assembly
 * AppKit framework
 
 ## Apple Technologies
@@ -24,6 +24,7 @@ The App also can save/open food diary and favorites files, and export data in cs
 ## Other
 * Git Version Control
 <br></br>
+
 
 # iFoodTrack Dashboard Animation (placeholder)
 <figure>
@@ -38,10 +39,11 @@ The App also can save/open food diary and favorites files, and export data in cs
 </figure>
 
 # A macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
-This project was written entirely without using any dependency and relied on a lot of Objective-C code. Some of the challenges including updating data for the various views in the dashboard main window and doing all the math for graphing the nutrient chart data.
+The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without using any external frameworks/APIs. Some of the challenges included syncing data between views in the dashboard window and doing lots of math for graphing the nutrient chart data.
 <br></br>
 
-## Sample Code:
+
+## Here's Sample Code:
 ### Plotting daily nutrient totals in time-bar charts (placeholder):
 ```swift
 /// Will draw nutrient-specific nutrient total value per date bar of bar graph.
@@ -80,8 +82,8 @@ This project was written entirely without using any dependency and relied on a l
         }
     }
 ```
-<br>
-</br>
+<br></br>
+
 
 ### A test for validating nutrient value calculations:
 ```swift
@@ -147,47 +149,29 @@ This project was written entirely without using any dependency and relied on a l
         
     }
 ```
-<br>
-</br>
+<br></br>
 
 
 # Sample Screen Shots (Placeholders, include Settings, Custom Foods, Custom Meals Windows)
 <table>
 <tr>
 	<td>
-	<img src="images/screenshots/01a iFTmacOS main window Diary light.png" alt="blue marble weather daily forecast" width="500"/>
+	<img src="images/screenshots/01a iFTmacOS main window Diary light.png" alt="Main Window Dashboard" width="500"/>
 	</td>
 	<td>
-	<img src="images/screenshots/01b iFTmacOS main window Diary dark.png" alt="blue marble weather daily forecast" width="500"/>
-	</td>
-</tr>
-<tr>
-	<td>
-	<img src="images/screenshots/02a iFTmacOS main window TimeChart light.png" alt="blue marble weather daily forecast" width="500"/>
-	</td>
-	<td>
-	<img src="images/screenshots/05a iFTmacOS main window Trash light.png" alt="blue marble weather daily forecast" width="500"/>
+	<img src="images/screenshots/01b iFTmacOS main window Diary dark.png" alt="Custom Foods" width="500"/>
 	</td>
 </tr>
 <tr>
 	<td>
-	<img src="images/screenshots/08a iFTmacOS Settings Appearance light.png" alt="blue marble weather daily forecast" width="500"/>
+	<img src="images/screenshots/02a iFTmacOS main window TimeChart light.png" alt="Custom Meals" width="500"/>
 	</td>
 	<td>
-	<img src="images/screenshots/06a iFTmacOS Settings Advanced light.png" alt="blue marble weather daily forecast" width="500"/>
-	</td>
-</tr>
-<tr>
-	<td>
-	<img src="images/screenshots/08a iFTmacOS Settings Appearance light.png" alt="blue marble weather daily forecast" width="500"/>
-	</td>
-	<td>
-	<img src="images/screenshots/012a Settings Window Demo light.png" alt="blue marble weather daily forecast" width="400"/>
+	<img src="images/screenshots/05a iFTmacOS main window Trash light.png" alt="Settings" width="500"/>
 	</td>
 </tr>
 </table>
 
-<!-- ![readme-bluemarbleweather-daily](../images/BMW%20MainView%20Daily.png) -->
 
 ## I've implemented the following:
 #### Code Structure
@@ -195,26 +179,29 @@ This project was written entirely without using any dependency and relied on a l
 * Delegates and Protocols, NSViewController/NSView
 * Navigation Split Views
 * OutlineViews
-* Parsing a CSV database
+* Interface Builder Views
+* Cocoa Bindings
+* CSV Database Parsing
 
 #### Testing/Error Handling
 * Unit Testing
-* Error handling
+* Error Handling
 * Alerts
-* Empty states
-* Text input validation
+* Empty States
+* Text Input Validation
 
 #### Customization
 * Toolbar and Menu selections
 * Settings Window with TabBar subviews
 * Light and Dark Mode Selections
-* Unit conversions
+* Unit Conversions
+* Custom Threshold values
 
 #### Project Organization
-* Code documentation (DocC)
-* Help Book manual
+* Code Documentation (DocC)
+* Help Book Manual
 * Privacy Manifest
-* Group folder organization
+* Group Folder Organization
 
 
 # Future Considerations
