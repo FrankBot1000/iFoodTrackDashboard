@@ -42,7 +42,7 @@ This project was written entirely without using any dependency and relied on a l
 <br></br>
 
 ## Sample Code:
-### Plotting daily nutrient totals in time-bar charts:
+### Plotting daily nutrient totals in time-bar charts (placeholder):
 ```swift
 /// Will draw nutrient-specific nutrient total value per date bar of bar graph.
     func drawBarGraphDataSegments(_ cgContext: CGContext?) {
@@ -151,117 +151,7 @@ This project was written entirely without using any dependency and relied on a l
 </br>
 
 
-### A test to confirm conversion of double values to scientific notation, for display in chart y-axis labels:
-
-```swift
-    func testConvertDoubleToSciNotationForGraph() {
-        // Given
-        let segmentValues = [0,
-                            1,
-                             1.2,
-                             1.23,
-                             1.2345678,
-                            1234,
-                             1234.5678,
-                             0.12345678,
-                             0.012345678,
-                             0.0012345678]
-
-        let numFormatter = NumberFormatter()
-        numFormatter.maximumFractionDigits = 1
-        numFormatter.numberStyle = .scientific
-
-        for segmentValue in segmentValues {
-            let myNum_sciString     = numFormatter.string(for: segmentValue) ?? ""
-            
-            // When
-            let myNum_beforeDecimal   = myNum_sciString.prefix(3)
-            
-            // Will include "E" if was a whole number or zero, so only keep first character:
-            var myNum_coefficientPart = myNum_beforeDecimal // NB: will contain "E" when is a whole number or zero.
-            if myNum_coefficientPart.contains("E") {
-                myNum_coefficientPart.removeLast(2)
-            }
-            
-            let exponentEIndex      = myNum_sciString.firstIndex(of: "E") // will need to access original 'myNum_sciString' with it's "E" part.
-            var myNum_exponent      = myNum_sciString.suffix(from: exponentEIndex!)
-            _                       = myNum_exponent.removeFirst()      // removes, and returns, first element
-            let exponentWithoutE    = String(myNum_exponent)
-            
-            print("\(myNum_coefficientPart) x 10E\(exponentWithoutE)")
-//            0 x 10E0
-//            1 x 10E0
-//            1.2 x 10E0
-//            1.2 x 10E0
-//            1.2 x 10E0
-//            1.2 x 10E3
-//            1.2 x 10E3
-//            1.2 x 10E-1
-//            1.2 x 10E-2
-//            1.2 x 10E-3
-            
-            // Then
-            XCTAssert(myNum_beforeDecimal.count != 0, "There's nothing to represent the decimal part!")
-            XCTAssert(exponentWithoutE != "", "There's no exponent value")
-        }
-    }
-```
-<br>
-</br>
-
-
-### Sample code structure for App Navigation:
-
-```swift
-// MARK: - FBNavigationDelegate Methods
-extension FBMainSplitVC: FBNavigationDelegate {
-    
-    /// Set the middleVC based on selected Navigation Bar in leftVC.
-    func setMiddleVC_forNavBar(at navBarIndex: kNavBarIndex) {
-        var middleVCs: (graph: FBMiddleGraphVC, list: FBMiddleListVC)
-        switch navBarIndex {
-            case .library:      middleVCs = libraryGraphAndFoodListVCs()
-            case .favorites:    middleVCs = favoritesGraphAndFoodListVCs()
-            case .diary:        middleVCs = diaryGraphAndFoodListVCs()
-            case .timeChart:    middleVCs = timeChartGraphAndFoodListVCs()
-            case .trash:        middleVCs = trashGraphAndFoodListVCs()
-        }
-        setMiddleVCSplitViewItems(topVC: middleVCs.graph, bottomVC: middleVCs.list)
-    }
-    
-    
-    /// Sets up Library Graph and Library FoodList view controllers.
-    ///
-    /// A "mini" library of all_SRRFoods_library is loaded from disk.
-    func libraryGraphAndFoodListVCs() -> (FBMiddleGraphVC, FBMiddleListVC) {
-        let graphVC             = FBLibraryGraphVC(chartView: FBPieGraphView(frame: .zero))
-        let graphTopToolBarVC   = FBGraphTopToolBarVC(identifier: .topToolBarVCID_libraryGraph)
-        
-        let listVC              = FBLibraryListVC(fdrfoods: all_FDRFoods_library,
-                                                  identifier: .listVCID_library)
-        let listTopToolBarVC    = FBLibraryListTopToolBarVC()
-        let listBottomToolBarVC = FBFoodListBottomToolBarVC(popUpTitles: kFoodCategoryName.allNames)
-        
-        setGraphVC_FoodListVC_infoPanel_Delegates(graphVC: graphVC, 
-                                                  graphTopToolBarVC: graphTopToolBarVC,
-                                                  listVC: listVC,
-                                                  listTopToolBarVC: listTopToolBarVC,
-                                                  listBottomToolBarVC: listBottomToolBarVC)
-        
-        let topVC               = FBMiddleGraphVC(graphVC: graphVC, 
-                                                  topToolBarVC: graphTopToolBarVC,
-                                                  foodListTopToolBarVC: listTopToolBarVC)
-        let bottomVC            = FBMiddleListVC(listVC: listVC,
-                                                 topToolBarVC: listTopToolBarVC,
-                                                 bottomToolBarVC: listBottomToolBarVC)
-        return (topVC, bottomVC)
-    }
-    ... ...
-```
-<br>
-</br>
-
-# Sample Screen Shots (Placeholders)
+# Sample Screen Shots (Placeholders, include Settings, Custom Foods, Custom Meals Windows)
 <table>
 <tr>
 	<td>
