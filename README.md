@@ -215,10 +215,10 @@ The motivation for building a great nutrient tracker started with this older Obj
 </tr>
 <tr>
 	<td>
-	<img src="images/screenshots/iFTDash Custom Food Window.png" alt="Custom Meals" width="500"/>
+	<img src="images/screenshots/iFTDash Custom Food Window_noAlpha.png" alt="Custom Meals" width="500"/>
 	</td>
 	<td>
-	<img src="images/screenshots/iFTDash Custom Meals Window.png" alt="Settings" width="500"/>
+	<img src="images/screenshots/iFTDash Custom Meals Window_noAlpha.png" alt="Settings" width="500"/>
 	</td>
 </tr>
 </table>
@@ -232,7 +232,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 * OutlineViews
 * Interface Builder Views
 * Cocoa Bindings
-* CSV Database Parsing
+* CSV Data Parsing
 
 #### Testing/Error Handling
 * Unit Testing
