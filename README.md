@@ -150,7 +150,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 
 ### Get maximum line (bezier path) height for the line chart:
 ```objective-c
-/// Get maximum height of bezierPath.
+/// Get maximum height of bezierPath for the Line Chart.
 -(double)bezierPathWithMaxHeight {
     double maxHeight            = 0;
     double bezierPath_y_value   = 0;
@@ -159,7 +159,6 @@ The motivation for building a great nutrient tracker started with this older Obj
     
     for (int tagNumber = 0; tagNumber <= NUMBER_OF_BUTTON_TAGS; tagNumber++) {
         // Test NSBezierPath graph line based on whether associated nutrient button is on:
-        // FB_highlightColor_NSButton *aButton = [[FB_highlightColor_NSButton alloc] init];
         FBColorButton *aButton = [myNutrientButtons_static nutrientButtonbasedOnTag:tagNumber];
         
         // Only check bezierPath nutrient graphs that have associated nutrient buttons with an "ON" state
