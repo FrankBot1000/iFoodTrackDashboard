@@ -148,7 +148,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 <br></br>
 
 
-### Get maximum height of lines (bezier paths) in chart:
+### Get maximum line (bezier path) height for the line chart:
 ```objective-c
 /// Get maximum height of bezierPath.
 -(double)bezierPathWithMaxHeight {
