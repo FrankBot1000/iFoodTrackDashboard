@@ -164,6 +164,14 @@ The motivation for building a great nutrient tracker started with this older Obj
 </tr>
 <tr>
 	<td>
+	<img src="images/screenshots/iFTDash favorites nutDetails.png" alt="Main Window showing Nutrient Details" width="500"/>
+	</td>
+	<td>
+	<img src="images/screenshots/iFTDash favorites snacks.png" alt="Custom Foods" width="500"/>
+	</td>
+</tr>
+<tr>
+	<td>
 	<img src="images/screenshots/iFTDash Custom Food Window.png" alt="Custom Meals" width="500"/>
 	</td>
 	<td>
@@ -207,7 +215,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 # Future Considerations
 * Sync with HealthKit, for newer macOS versions
 * Implement Core Data
-* Re-write using Swift/SwiftUI?
+* Re-write using Swift/SwiftUI
 <br></br>
 
 # FeedBack
