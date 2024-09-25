@@ -26,11 +26,11 @@ The App also can save/open food diary and favorites files, and export data in cs
 <br></br>
 
 
-# iFoodTrack Dashboard Animation (placeholder)
+# iFoodTrack Dashboard Animation
 <figure>
 	<div>
-		<video width="500" controls poster="images/screenshots/02a iFTmacOS main window TimeChart light.png" muted preload="auto">
-			<source src="videos/iFoodTrack DashboardmacOS_compressed.mp4" type="video/mp4">
+		<video width="500" controls poster="images/screenshots/iFTDash library.png" muted preload="auto">
+			<source src="videos/iFTDash Screen Recording_compressed.mp4" type="video/mp4">
 			<!-- For non-HTML5 browsers: -->
 			Your browser doesn't support the video tag. Click <a href=http://www.firefox.com>here</a> 
 			to download the Firefox browser for your operating system.
@@ -156,18 +156,18 @@ The motivation for building a great nutrient tracker started with this older Obj
 <table>
 <tr>
 	<td>
-	<img src="images/screenshots/01a iFTmacOS main window Diary light.png" alt="Main Window Dashboard" width="500"/>
+	<img src="images/screenshots/iFTDash library.png" alt="Main Window showing library" width="500"/>
 	</td>
 	<td>
-	<img src="images/screenshots/01b iFTmacOS main window Diary dark.png" alt="Custom Foods" width="500"/>
+	<img src="images/screenshots/iFTDash favorites.png" alt="Custom Foods" width="500"/>
 	</td>
 </tr>
 <tr>
 	<td>
-	<img src="images/screenshots/02a iFTmacOS main window TimeChart light.png" alt="Custom Meals" width="500"/>
+	<img src="images/screenshots/iFTDash Custom Food Window.png" alt="Custom Meals" width="500"/>
 	</td>
 	<td>
-	<img src="images/screenshots/05a iFTmacOS main window Trash light.png" alt="Settings" width="500"/>
+	<img src="images/screenshots/iFTDash Custom Meals Window.png" alt="Settings" width="500"/>
 	</td>
 </tr>
 </table>
