@@ -3,9 +3,9 @@ iFoodTrack Dashboard App (originally called "Food String Tracker") was the origi
 
 iFoodTrack Dashboard is organized as a single window dashboard-style App. It presents a library/favorites/custom meals outlineView (left side), a middle detail view, for diary details (top) and chart details (bottom), and a right extended details view describing nutrient data absolute values, averages and mean values. 
 
-It can do quite a lot. Besides looking up library food details, you can save favorites, create custom foods or custom meals, maintain a food diary and track multiple nutrients in a single graph.
+It can do quite a lot. Besides looking up library food details, you can save favorites, create custom foods or custom meals, maintain a food diary and track multiple nutrients in a single graph and in the extended-detail right window panel.
 
-The App also can save/open food diary and favorites files, and export data in csv format.
+The App can also open or save food diary and favorites files, and export data in csv format.
 <br></br>
 
 # Technologies Used
@@ -38,8 +38,8 @@ The App also can save/open food diary and favorites files, and export data in cs
 	</div>
 </figure>
 
-# A macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
-The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without using any external frameworks/APIs. One of the first problems one parsing the many CSV data files (when JSON was not yet available). Another was doing all the math for graphing the nutrient chart data.
+# A traditional macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
+The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without external frameworks/APIs. One of the first problems was parsing the many CSV food data files (when JSON was not yet available). Another was doing all the math for graphing the nutrient chart data.
 <br></br>
 
 
@@ -196,7 +196,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 <br></br>
 
 
-# Sample Screen Shots (Placeholders, include Settings, Custom Foods, Custom Meals Windows)
+# Sample Screen Shots:
 <table>
 <tr>
 	<td>
@@ -259,11 +259,12 @@ The motivation for building a great nutrient tracker started with this older Obj
 # Future Considerations
 * Sync with HealthKit, for newer macOS versions
 * Implement Core Data
-* Re-write using Swift/SwiftUI
+* Re-write using Swift/SwiftUI...
 <br></br>
 
+
 # FeedBack
-<p class="contact-message">If you have any feedback or suggestions you can reach out using this <a class="btn" href="mailto:fbotlogic@fbotlogicsolutions.com?subject=Blue Marble Weather Support">Email</a> link.</p>
+<p class="contact-message">If you have any feedback or suggestions you can reach out via <a class="btn" href="mailto:fbotlogic@fbotlogicsolutions.com?subject=Blue Marble Weather Support">Email</a>.</p>
 
 
 
