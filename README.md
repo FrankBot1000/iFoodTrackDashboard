@@ -39,115 +39,159 @@ The App also can save/open food diary and favorites files, and export data in cs
 </figure>
 
 # A macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
-The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without using any external frameworks/APIs. Some of the challenges included syncing data between views in the dashboard window and doing lots of math for graphing the nutrient chart data.
+The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without using any external frameworks/APIs. One of the first problems one parsing the many CSV data files (when JSON was not yet available). Another was doing all the math for graphing the nutrient chart data.
 <br></br>
 
 
 ## Here's Sample Code:
-### Plotting daily nutrient totals in time-bar charts (placeholder):
-```swift
-/// Will draw nutrient-specific nutrient total value per date bar of bar graph.
-    func drawBarGraphDataSegments(_ cgContext: CGContext?) {
-        let lineWidth    = 2.0                              // initialize with zero value
-        var y            = lineWidth - 1.0 + xLabelHeight   // start half way up width of axis line
+### Parsing CSV files:
+```objective-c
+//MARK: - parseFile:
+-(NSMutableArray *)parseFile:(NSURL *)fileURL {
+    // ------------------------------------------------------------------------------------------
+    // File is broken up into an array of lines (of type NSString).
+    // Each line is then broken up into an array of objects (of type NSString) = "Descriptors"
+    // ------------------------------------------------------------------------------------------
+    myFoodStringFile = [NSString stringWithContentsOfURL:fileURL
+                                                encoding:NSASCIIStringEncoding error:nil];
+    
+    // File is divided up as a series of lines that become elements of the fileLineStringArray array.
+    NSArray *fileLineStringArray = [myFoodStringFile componentsSeparatedByString:@"\n"];
+    
+    // Define Delimiters in file to be parsed.  Only one.  It's the ^ character.
+    NSString        *myDelimiters = @"^";
+    NSCharacterSet  *customChars = [NSCharacterSet characterSetWithCharactersInString:myDelimiters];
+    
+    // Define characters to trim from parsed objects. Trim ~ characters from ends of NSString objects.
+    // NB: \r is the character for a carriage return (or a "return" character)... this trims objects at end of lines that have both ~ and \r,
+    // (otherwise, if only look for ~, \r at end of string will keep the tail end ~ from getting trimmed off)
+    NSString        *myTrimmedCharacters = @"~\r";
+    NSCharacterSet  *myTrimmer = [NSCharacterSet characterSetWithCharactersInString:myTrimmedCharacters];
+    NSString        *trimmedString;
+    
+    // Array for storing the trimmed fileLineStringArray
+    NSMutableArray *fileLineStringArrayTrimmed = [[NSMutableArray alloc] init];
+    
+    for (NSString *aLineString in fileLineStringArray) {
+        // Now, divide up the components of each food string into a "child" array of strings.
+        // identify and separate components based on delimiters, and will remove delimiters from component objects.
+        NSArray         *componentsOfLineString         = [aLineString componentsSeparatedByCharactersInSet:customChars];
+        NSMutableArray  *lineStringComponentsTrimmed    = [[NSMutableArray alloc] init];
         
-        // total the value of all bars ( = "segments") by using reduce to sum them
-        guard let maxValue  = segments.map({Double($0.value)}).max() else { return }
-        var maxBarHeight    = maxValue > 0 ? maxValue : 100.0   // protects against dividing by zero.
+        printf("#%lu:", (unsigned long)[fileLineStringArray indexOfObject:aLineString]);
         
-        // Check if drv100Percent value is greater than maxValue, then set max to drv100Percent value
-        maxBarHeight        = drv100PercentValue >= maxValue ? drv100PercentValue : maxValue
-        
-        let roundedRect     = FBRoundedRect(radius: 2.5, corners: [.bottomLeft, .bottomRight])
-        // To round the top of bar, use bottomLeft and bottomRight, since drawing starts from bottom to top
-        
-        // Loop through the values array:
-        for (index, segment) in segments.enumerated() {
-            let i: CGFloat  = CGFloat(index)
-            let x: CGFloat  = i * (barWidth + spacing) + offset + yLabelHeight
-            let value       = segment.value > 0 ? segment.value : 0 // set to zero if value is negative.
+        for (NSString *foodData in componentsOfLineString) {
+            printf(" %s", [foodData UTF8String]);    // use printf so that we can get the component info all on one line
+            trimmedString = [foodData stringByTrimmingCharactersInSet:myTrimmer];   // trim ~ characters off ends of string objects
             
-            let barHeight   = (value/maxBarHeight * (viewHeight - xLabelHeight))
-            if barHeight == 0 { continue }  // If barHeight was zero, then skip drawing the bar! Prevents drawing artifacts on X-Axis.
+            [lineStringComponentsTrimmed addObject:trimmedString];
             
-            let bar         = CGRect(x: x, y: y, width: barWidth, height: barHeight)
-            var path        = CGPath(rect: .zero, transform: nil)
-            path            = roundedRect.path(in: bar) ?? CGPath(roundedRect: bar, cornerWidth: 2.5, cornerHeight: 2.5, transform: .none)
-            
-            cgContext?.setFillColor(self.nutrientColor.cgColor)
-            cgContext?.addPath(path)
-            cgContext?.fillPath()
-            
-            y = lineWidth - 1.0 + xLabelHeight     // reset y
+        }
+        printf("\n");
+        if ([lineStringComponentsTrimmed count]) {
+            [fileLineStringArrayTrimmed addObject:lineStringComponentsTrimmed];
         }
     }
+    
+    return fileLineStringArrayTrimmed;
+}
 ```
 <br></br>
 
 
-### A test for validating nutrient value calculations:
-```swift
-/// Test will test Food Nutrient DRV percent calculation using DRV nutrient defaults. The result should yield 100% for all DRV Nutrient calculations.
-    func testCalculateNutValues_recalculateDRVPercent() {
-        // Arrange
-        let other6NutItemIndexes: [kNutrientNameIndex] = FBDRVSettingsHelper.shared.nutNameIndexes
+### Create the nutrient data lines (bezierPaths) for the chart data:
+```objective-c
+/// Create bezierPath for Nutrient with tag.
+-(NSBezierPath *)createBezierPathforNutrientWithTag:(long int)dataTag {
+    // NSLog(@"sortedDateKeyStrings count in createBezierPathforNutrientWithTag:...: %ld", sortedDateKeyStrings.count);
+    FoodItem *foodItemNutrientTotalsForDay;
+    
+    // Use a temporary object to point to the nutrient graph line path object of interest:
+    NSBezierPath *graphLinePath = [NSBezierPath bezierPath];
+    [graphLinePath setLineWidth:1.0];
+    
+    // ----------------------------------------------------------------------
+    // Use sortedDateKeyStrings to graph data in Ascending Order of Date:
+    // ----------------------------------------------------------------------
+    // [graphLinePath moveToPoint:graphOrigin_point];    // Don't start with zero, start with first data point instead (see below).
+    // NB: Watch out for arithmetic precision.  Remember, result of int + double is int (loses double precision).  Thus, use double variable type for incrementDay
+    double incrementDay = 0.0;
+    NSPoint firstPoint;
+    NSPoint nextPoint;
+    
+    for (NSString *aDateKey in _limitedSortedDateKeyStrings) {
+        // NB: x and y values are both offset by graphOrigin_point values, so that the bezier paths will get drawn WITHIN the graphs x- and y-axis (and start at the "offset" origin).
+        foodItemNutrientTotalsForDay = [nutrientPercentRV_byDate_dictionary_static objectForKey:aDateKey];
         
-        // MARK: Set up NutIDs:
-        // topNutIDs, midNutIDs, and bottomNutIDs split 'other6NutIems' into subarray item pairs:
-        var otherNutIDs: (topPair:[kNutrientID], midPair:[kNutrientID], bottomPair:[kNutrientID]) {
-            let topPair = other6NutItemIndexes[0...1].map({$0.rawValue})
-            let midPair = other6NutItemIndexes[2...3].map({$0.rawValue})
-            let btmPair = other6NutItemIndexes[4...5].map({$0.rawValue})
-            let NutPairs = [topPair, midPair, btmPair]
-            let NutIDPairs = NutPairs.map{$0.map{kNutrientID.allNutrientIDs[$0]}}
-            return (NutIDPairs[0], NutIDPairs[1], NutIDPairs[2])
+        // Figure out which nutrient total value to extract, and store it in the y-coordinate value for the graphLinePath:
+        nextPoint.y  = [foodItemNutrientTotalsForDay nutrientValue_basedOnTag:dataTag] + _graphOrigin_point.y;
+        
+        if ([aDateKey isEqualTo:[_limitedSortedDateKeyStrings objectAtIndex:0]]) {
+            // Plot the first point:
+            firstPoint.x = _graphOrigin_point.x;
+            firstPoint.y = nextPoint.y;
+            [graphLinePath moveToPoint:firstPoint];
         }
         
-        var topNutIDs: [kNutrientID]    { otherNutIDs.topPair } // recompute .topPair
-        var midNutIDs: [kNutrientID]    { otherNutIDs.midPair } // recompute .midPair
-        var bottomNutIDs: [kNutrientID] { otherNutIDs.bottomPair } // recompute .bottomPair
-        
-        let otherNutIDsArrays   = [topNutIDs, midNutIDs, bottomNutIDs]
-        
-        // MARK: Create DRV Food (a token food):
-        let nutIDs      = kNutrientID.allCases.map{$0.rawValue}
-        let nutNames    = kNutrientName.allCases.map{$0.rawValue}
-        let nutNumbers  = kNutrientNameIndex.allNutrientIndexes
-        let nutModifers = kNutrientNameIndex.allUnitModifiers
-        let nutDRV      = NutrientDRV()
-
-        var nutrients: [FDRNutrient] = []
-
-        // Iterate through all nutrients, based on nutrient name case number (index) in kNutrientNameIndex enum:
-        for n in nutNumbers {
-            nutrients.append(FDRNutrient(amount: nutDRV.nutrientDRVDict[kNutrientNameIndex(rawValue: n)!], nutrient: FDRNutInfo(id: nutIDs[n], number: "0", name: nutNames[n], rank: 0, unitName: nutModifers[n])))
+        else {
+            // Plot next point:
+            // Extract nutrient value total for that date key:
+            incrementDay = incrementDay + _distanceBetween_X_Values; // space each day by X_AXIS_DISTANCE_BETEEN_TICKS number of pixels
+            nextPoint.x  = incrementDay + _graphOrigin_point.x;      // start with day "1"
+            [graphLinePath lineToPoint:nextPoint];
         }
-        
-        
-        var drvFood  = FDRFood(nutrients: nutrients)
-        var drvAbsAmountLabelsArray: [FBNutAmountsAndLabels] = []
-        let graphVC = FBGraphVC()
-        
-//        let expectedOtherNutIDsArrays: [FBNutAmountsAndLabels] = [
-//        FBNutAmountsAndLabels(nutAmounts: (drvAmounts: [100, 100], absAmounts: [20, 28]), nutLabels: (drvLabels: ["%", "%"], absLabels: ["g", "g"])),
-//        FBNutAmountsAndLabels(nutAmounts: (drvAmounts: [100, 100], absAmounts: [90, 300]), nutLabels: (drvLabels: ["%", "%"], absLabels: ["g", "mg"])),
-//        FBNutAmountsAndLabels(nutAmounts: (drvAmounts: [100, 100], absAmounts: [1300, 2300]), nutLabels: (drvLabels: ["%", "%"], absLabels: ["mg", "mg"]))
-//        ]
-        
-        // Act
-        // Calculate selected Food amounts:
-        for otherNutIDsArray in otherNutIDsArrays {
-            guard let nutAmountsAndLabels = drvFood.calculateNutValues(nutrientIDs: otherNutIDsArray) else { return }
-            drvAbsAmountLabelsArray.append(nutAmountsAndLabels)
-        }
-        
-        let drvOtherNutIdsAmounts = drvAbsAmountLabelsArray.map{$0.nutAmounts}.map{$0.drvAmounts}
-        let expectedDRVOtherNutIdsAmounts = [[100.0, 100.0], [100.0, 100.0], [100.0, 100.0]]
-        
-        // Assert
-        XCTAssert(drvOtherNutIdsAmounts == expectedDRVOtherNutIdsAmounts)
-        
     }
+    
+    return graphLinePath;
+}
+```
+<br></br>
+
+
+### Get maximum height of lines (bezier paths) in chart:
+```objective-c
+/// Get maximum height of bezierPath.
+-(double)bezierPathWithMaxHeight {
+    double maxHeight            = 0;
+    double bezierPath_y_value   = 0;
+    long int bezierPathCount;
+    NSPoint currentPoint;
+    
+    for (int tagNumber = 0; tagNumber <= NUMBER_OF_BUTTON_TAGS; tagNumber++) {
+        // Test NSBezierPath graph line based on whether associated nutrient button is on:
+        // FB_highlightColor_NSButton *aButton = [[FB_highlightColor_NSButton alloc] init];
+        FBColorButton *aButton = [myNutrientButtons_static nutrientButtonbasedOnTag:tagNumber];
+        
+        // Only check bezierPath nutrient graphs that have associated nutrient buttons with an "ON" state
+        if (aButton.state == NSControlStateValueOn) {
+            
+            NSBezierPath *aBezierPath   = [myNutrientGraphLinePaths_static nutrientGraphLinePath_basedOnTag:tagNumber];
+            bezierPathCount             = [aBezierPath elementCount];
+            
+            // Make sure there's elements (dataPoints) making up the bezierPath:
+            if ([aBezierPath elementCount]) {
+                // pathRect = [aBezierPath bounds];
+                // NSLog(@"\n\n--- check aBezierPath max y-value:");
+                
+                // Scan for Max y-value of bezierPath, and assign maxHeight to it:
+                for (int elementIndex = 0; elementIndex <= bezierPathCount - 1; elementIndex++) {
+                    NSBezierPathElement bezierPathElementtype = [aBezierPath elementAtIndex:elementIndex
+                                                                           associatedPoints:&currentPoint];
+                    
+                    // Use NSMoveToBezierPathElement to get NSPoint Data from first element
+                    // and, use NSMoveToBezierPathElement to get NSPoint Data from subsequent elements
+                    if (bezierPathElementtype == NSLineToBezierPathElement || bezierPathElementtype == NSMoveToBezierPathElement) {
+                        // NSLog(@"x,y: %.1f, %.1f", currentPoint.x, currentPoint.y);
+                        bezierPath_y_value = currentPoint.y;
+                    }
+                    if (bezierPath_y_value > maxHeight) { maxHeight = bezierPath_y_value; }
+                }
+            }
+        }
+    }
+    
+    return maxHeight;
+}
 ```
 <br></br>
 
