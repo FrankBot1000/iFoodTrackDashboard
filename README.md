@@ -1,5 +1,5 @@
 # iFoodTrack Dashboard
-iFoodTrack Dashboard App (originally called "Food String Tracker") was the original scratching that itch App. It's a macOS App built when Objective-C was king, using AppKit and the Xcode Interface Builder. It utilizes the USDA FoodCentral database.
+iFoodTrack Dashboard App (originally called "Food String Tracker") was the original scratching that itch App. It's a macOS App built when Objective-C was King, using AppKit and the Xcode Interface Builder. It utilizes the USDA FoodCentral database.
 
 iFoodTrack Dashboard is organized as a single window dashboard-style App. It presents a library/favorites/custom meals outlineView (left side), a middle detail view, for diary details (top) and chart details (bottom), and a right extended details view describing nutrient data absolute values, averages and mean values. 
 
@@ -39,7 +39,7 @@ The App can also open or save food diary and favorites files, and export data in
 </figure>
 
 # A traditional macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
-The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without external frameworks/APIs. One of the first problems was parsing the many CSV food data files (when JSON was not yet available). Another was doing all the math for graphing the nutrient chart data.
+The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without external frameworks/APIs. One of the first problems was parsing the many CSV food data files (when JSON files were not yet available). Another was doing all the math for graphing the nutrient chart data.
 <br></br>
 
 
@@ -247,6 +247,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 * Light and Dark Mode Selections
 * Unit Conversions
 * Custom Threshold values
+* Color Themes
 
 #### Project Organization
 * Code Documentation (DocC)
@@ -258,7 +259,10 @@ The motivation for building a great nutrient tracker started with this older Obj
 # Future Considerations
 * Sync with HealthKit, for newer macOS versions
 * Implement Core Data
-* Re-write using Swift/SwiftUI...
+
+[//]: # "NB: You need 2 spaces at the end of a markdown line to implement a line break"
+...Actually, I've recently built a more modern version with a less-busy dashboard interface.  
+It uses Swift, AppKit, Programmatic-UI, called <a href="https://fbotlogicsolutions.com/iFoodTrackmacOS/index.html">iFoodTrack</a>, that's even made it to the <a href="https://apps.apple.com/us/app/ifoodtrack/id6467825539">Mac AppStore</a>.
 <br></br>
 
 
