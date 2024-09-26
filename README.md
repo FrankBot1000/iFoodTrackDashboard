@@ -262,7 +262,7 @@ The motivation for building a great nutrient tracker started with this older Obj
 
 [//]: # "NB: You need 2 spaces at the end of a markdown line to implement a line break"
 ...Actually, I've recently built a more modern version with a less-busy dashboard interface.  
-It uses Swift, AppKit, Programmatic-UI, called <a href="https://fbotlogicsolutions.com/iFoodTrackmacOS/index.html">iFoodTrack</a>, that's even made it to the <a href="https://apps.apple.com/us/app/ifoodtrack/id6467825539">Mac AppStore</a>.
+It uses Swift, AppKit, Programmatic-UI, and is called <a href="https://fbotlogicsolutions.com/iFoodTrackmacOS/index.html">iFoodTrack</a>, that's even made it to the <a href="https://apps.apple.com/us/app/ifoodtrack/id6467825539">Mac AppStore</a>.
 <br></br>
 
 
