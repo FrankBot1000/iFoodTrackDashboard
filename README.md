@@ -34,6 +34,7 @@ The App can also open or save food diary and favorites files, and export data in
 
 
 [//]: # "For webpage, use embedded below figure instead"
+<!-- 
 <figure>
 	<div>
 		<video width="500" controls poster="images/screenshots/iFTDash library.png" muted preload="auto">
@@ -44,6 +45,7 @@ The App can also open or save food diary and favorites files, and export data in
 		</video>
 	</div>
 </figure>
+ -->
 
 # A traditional macOS (i.e., Mac OSX) Cocoa/Interface Builder Project...
 The motivation for building a great nutrient tracker started with this older Objective-C/Cocoa project, written entirely without external frameworks/APIs. One of the first problems was parsing the many CSV food data files (when JSON files were not yet available). Another was doing all the math for graphing the nutrient chart data.
