@@ -29,12 +29,9 @@ The App can also open or save food diary and favorites files, and export data in
 # iFoodTrack Dashboard Animation
 
 [//]: # "NB: For README.md Github videos, Use GitHub asset urls eg. https://github.com/user-attachments/assets/xxxxxPlaceholderFileNameHerexxxxx as video source (derived first by dragging-dropping a video within the README.md file to get the url)."
-<!-- 
-<video width="500" src="https://github.com/user-attachments/assets/xxxxxPlaceholderFileNameHerexxxxx">
+<video width="500" src="https://github.com/user-attachments/assets/8d23b745-45ae-498f-a304-ed0580f0a13d">
 </video>
-<video width="500" src="https://github.com/user-attachments/assets/xxxxxPlaceholderFileNameHerexxxxx">
-</video>
- -->
+
 
 [//]: # "For webpage, use embedded below figure instead"
 <figure>
