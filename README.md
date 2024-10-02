@@ -250,6 +250,10 @@ The motivation for building a great nutrient tracker started with this older Obj
 * Empty States
 * Text Input Validation
 
+#### Security
+* Runtime Check for Debugger, in Assembly
+* Image Asset Validation, in Assembly
+
 #### Customization
 * Toolbar and Menu selections
 * Settings Window with TabBar subviews
